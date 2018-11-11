@@ -1,5 +1,11 @@
 const express = require('express');
+const Joi = require("joi");
 const router = express.Router();
+
+const schema = Joi.object().keys({
+    username: Joi.string().alphanum().min(3).max(30).required(),
+    password: Joi.string().min(8).required()
+})
 
 router.get('/', (req, res) => {
     res.json({
@@ -8,11 +14,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-    console.log('body', req.body);
+    const validInput = Joi.validate(req.body, schema);
 
-    res.json({
-        message: 'You\'ve signed up!'
-    });
+    res.json(validInput);
 });
 
 module.exports = router;
