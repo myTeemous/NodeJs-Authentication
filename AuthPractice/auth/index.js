@@ -3,7 +3,7 @@ const Joi = require("joi");
 const router = express.Router();
 
 const schema = Joi.object().keys({
-    username: Joi.string().alphanum().min(3).max(30).required(),
+    username: Joi.string().regex(/(^[a-zA-Z0-9_]{3,30}*$)/).required(),
     password: Joi.string().min(8).required()
 })
 
